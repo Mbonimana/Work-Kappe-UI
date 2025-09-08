@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Menu, ChevronRight } from "lucide-react"; 
+import BodyOne from "./BodyOne";
 
 const ByCategory: React.FC = () => {
   const [open, setOpen] = useState(true); 
@@ -17,6 +18,7 @@ const ByCategory: React.FC = () => {
   ];
 
   return (
+    <>
     <div className="hidden md:block mt-4 ml-10 w-64 border border-gray-200 rounded shadow-sm relative">
       
       <div
@@ -42,6 +44,9 @@ const ByCategory: React.FC = () => {
         </ul>
       )}
     </div>
+    <BodyOne/>
+    </>
+    
   );
 };
 

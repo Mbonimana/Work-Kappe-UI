@@ -13,8 +13,13 @@ const Layout=() => {
         <>
             <NavContainer/>
             <Outlet/>
-            
+            {/* <BannerAd />  
+            <BestSales />
+            <HotDeals />  
+            <FeaturedProducts />     */}
             <FooterContainer/>
+            
+       
             
 
         </>
