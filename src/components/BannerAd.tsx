@@ -2,7 +2,7 @@ import React from 'react';
 
 const BannerAd: React.FC = () => {
   return (
-    <section className="bg-gray-100 w-[50rem] p-8 ml-[24rem] mt-[-22rem] mb-[2rem] ">
+    <section className=" bg-gray-100 w-[50rem] p-8 ml-[24rem] mt-[-22rem] mb-[2rem] ">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between">
        
         <div className="mb-8 md:mb-0 md:w-1/2">

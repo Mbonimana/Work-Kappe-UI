@@ -66,9 +66,9 @@ const Nav: React.FC = () => {
 
         {/* Icons */}
         <div className="flex items-center space-x-6 text-sm font-medium">
-          <div className="flex items-center space-x-1">
+          <div className="flex items-center space-x-1 ">
             <User size={20} />
-            <span>SIGN IN</span>
+          <Link to={'/auth/MyAccount'}> SIGN IN </Link>
           </div>
           <div className="flex items-center space-x-1">
             <Heart size={20} />
