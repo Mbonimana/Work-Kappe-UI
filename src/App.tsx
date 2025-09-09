@@ -8,6 +8,7 @@ import BannerAd from './components/BannerAd';
  import FeaturedProducts from './components/FeaturedProducts';
  import Login from  './components/auth/login';
  import MyAccount from './components/auth/myaccount';
+ import ContactUs from './components/ContactUs';
 
 
  function App() {
@@ -16,10 +17,10 @@ import BannerAd from './components/BannerAd';
       <Routes>
         <Route path='/' element={<Layout />}>
           <Route index element={<ByCategory />} />
-          <Route path='/HotDeals' element={<HotDeals />} />
-          <Route path='/FeaturedProducts' element={<FeaturedProducts />} />
-          <Route path='/BannerAd' element={<BannerAd />} />
+    
           <Route path='/auth/MyAccount' element={< MyAccount />} />
+          <Route path='/components/ContactUs' element={<ContactUs />} />
+          
           
           
           

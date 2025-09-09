@@ -1,6 +1,7 @@
 import React from "react";
 import { Search, User, Heart, ShoppingBag } from "lucide-react";
 import { Link } from "react-router-dom";
+import ContactUs from './components/ContactUs';
 const Nav: React.FC = () => {
   return (
     <nav className="w-full h-48">
@@ -35,7 +36,7 @@ const Nav: React.FC = () => {
           <a href="#">WELCOME TO OUR STORE!</a>
           <a href="#">BLOG</a>
           <a href="#">FAQ</a>
-          <a href="#">CONTACT US</a>
+          <Link to={'./components/ContactUs'}> Contact Us</Link>
         </div>
       </div>
 
