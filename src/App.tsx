@@ -9,6 +9,7 @@ import BannerAd from './components/BannerAd';
  import Login from  './components/auth/login';
  import MyAccount from './components/auth/myaccount';
  import ContactUs from './components/ContactUs';
+ import RegstratioForm from './components/auth/Registration';
 
 
  function App() {
@@ -21,15 +22,12 @@ import BannerAd from './components/BannerAd';
           <Route path='/auth/MyAccount' element={< MyAccount />} />
           <Route path='/components/ContactUs' element={<ContactUs />} />
           
-          
-          
-          
-
-          
-          
-          
+    
 
         </Route>
+
+        <Route path="/Login"  element={<Login />} /> 
+        <Route path="/Components/auth/login"  element={<Login />} /> 
 
       </Routes>
     </BrowserRouter>

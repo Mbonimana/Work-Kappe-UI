@@ -3,7 +3,7 @@ import React from 'react';
 const BestSales: React.FC = () => {
   return (
 
-    <div className='flex flex-col pl-3 justify-center md:flex-row  pb-7 '>
+    <div className=' hidden lg:flex flex-col pl-3 justify-center md:flex-row  pb-7 '>
     <section className="md:bg-gray-100 w-[35rem] h-[20rem] p-8   ">
     <div className='flex flex-row'>
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-start">
