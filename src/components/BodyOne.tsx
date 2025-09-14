@@ -1,4 +1,3 @@
-import React from 'react'
 import BannerAd from './BannerAd'
 import BestSales from './BestSales'
 import HotDeals from './HotDeals'

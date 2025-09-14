@@ -1,5 +1,5 @@
-import React from "react";
-import { Search, Clock, Mail, Phone, Home } from "lucide-react";
+
+import {  Clock, Mail, Phone, Home } from "lucide-react";
 
 function Footer() {
   return (

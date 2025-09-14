@@ -1,4 +1,4 @@
-import { Locate, Phone, Mail } from "lucide-react";
+import {  Phone,  } from "lucide-react";
 
 
 

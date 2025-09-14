@@ -3,7 +3,7 @@ import { Menu, ChevronRight } from "lucide-react";
 import BodyOne from "./BodyOne";
 
 const ByCategory: React.FC = () => {
-  const [open, setOpen] = useState(true); 
+  const [open, ] = useState(true); 
 
   const categories = [
     "Men’s Clothing",

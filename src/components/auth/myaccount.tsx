@@ -1,5 +1,3 @@
-import { Layout } from "lucide-react";
-import { Links } from "react-router-dom";
 
 
 function MyAccount() {
