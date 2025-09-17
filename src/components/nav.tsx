@@ -6,7 +6,7 @@ const Nav: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <nav className="w-full border-b">
+    <nav className="w-full border-b fixed top-0 bg-white z-50">
       {/* Top Sale Banner */}
       <div className="bg-black text-white text-xs flex justify-between items-center px-4 py-2">
         <div className="flex-1 text-center">
