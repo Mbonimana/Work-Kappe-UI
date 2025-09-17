@@ -1,5 +1,5 @@
 
-import { Userg} from "lucide-react";
+import { User} from "lucide-react";
 
 const SettingsPage = () => {
   return (

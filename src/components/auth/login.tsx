@@ -40,9 +40,12 @@ function Login() {
                    </Link>
                     
                     </div>
+                  <Link to ="/dashboard" className="text-yellow-400">
+                    <span  className="text-yellow-500 text-sm  justify-between " >Go to dashboard</span>
+                   </Link>
                 </form>
 
-                
+               
 
             </div>
         </div>
