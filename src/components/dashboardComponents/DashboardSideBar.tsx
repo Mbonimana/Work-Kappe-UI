@@ -1,4 +1,4 @@
-import { Activity, Box,  ShoppingBag, Users,Settings } from 'lucide-react';
+import { Activity, Box, ShoppingBag, Users,Settings } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import profilePic from '../../assets/profile.jpg';
 

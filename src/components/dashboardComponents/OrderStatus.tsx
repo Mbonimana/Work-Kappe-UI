@@ -37,7 +37,7 @@ const OrderStatus: React.FC = () => {
                 cx="50%"
                 cy="50%"
               >
-                {data.map((entry, index) => (
+                {data.map((_entry, index) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index]} />
                 ))}
               </Pie>
