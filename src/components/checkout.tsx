@@ -32,24 +32,11 @@ const Checkout: React.FC = () => {
       return;
     }
 
-    // Only include items with valid backend _id
-    const orderItems = cart
-      .filter(item => item._id)
-      .map(item => ({
-        productId: item._id,
-        quantity: item.quantity,
-      }));
-
-    if (orderItems.length === 0) {
-      Notiflix.Notify.failure("Cart items are invalid. Please refresh cart.");
-      return;
-    }
-
     setLoading(true);
 
     try {
       const res = await fetch(
-        "https://kappebackend.onrender.com/api/orders/create",
+        "https://kappebackend.onrender.com/api/orders/checkout",
         {
           method: "POST",
           headers: {
@@ -57,8 +44,6 @@ const Checkout: React.FC = () => {
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
-            items: orderItems,
-            totalPrice: getTotal(),
             customerName,
             email,
             address,
@@ -68,24 +53,23 @@ const Checkout: React.FC = () => {
         }
       );
 
-      // Try parsing JSON, but catch HTML response errors
-      let data;
-      try {
-        data = await res.json();
-      } catch {
-        throw new Error("Invalid response from server. Check backend logs.");
-      }
+      const data = await res.json();
 
       if (!res.ok) {
         throw new Error(data.message || "Failed to place order");
       }
 
       Notiflix.Notify.success("Order placed successfully!");
-      clearCart();
+
+      // Clear cart after successful checkout
+      await clearCart();
+
       navigate("/");
     } catch (err: any) {
       console.error("Checkout error:", err);
-      Notiflix.Notify.failure(err.message || "Something went wrong during checkout.");
+      Notiflix.Notify.failure(
+        err.message || "Something went wrong during checkout."
+      );
     } finally {
       setLoading(false);
     }
