@@ -16,7 +16,7 @@ const Nav: React.FC = () => {
   }, []);
 
   const handleLogout = () => {
-    logout(); // clears cart in context and localStorage
+    logout();
     setUser(null);
     navigate("/");
   };
@@ -113,6 +113,36 @@ const Nav: React.FC = () => {
         </div>
       </div>
 
+      {/* Mobile Menu */}
+      {menuOpen && (
+        <div className="md:hidden flex flex-col space-y-4 mt-2 px-4 text-sm font-medium">
+          <div className="flex items-center space-x-1">
+            <User size={20} />
+            {user ? (
+              <>
+                <span>Hello, {user.fullnames.split(" ")[0]}</span>
+                <button onClick={handleLogout} className="text-red-500 ml-2">
+                  Logout
+                </button>
+              </>
+            ) : (
+              <Link to="/Login">Sign In</Link>
+            )}
+          </div>
+          <div className="flex items-center space-x-1">
+            <Heart size={20} />
+            <span>(0)</span>
+          </div>
+          <div
+            className="flex items-center space-x-1 cursor-pointer"
+            onClick={() => setCartOpen(true)}
+          >
+            <ShoppingBag size={20} />
+            <span>({cart.length})</span>
+          </div>
+        </div>
+      )}
+
       {/* Cart Modal */}
       {cartOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-end z-50">
@@ -130,7 +160,7 @@ const Nav: React.FC = () => {
               <div className="flex-1 overflow-y-auto space-y-3">
                 {cart.map((item) => (
                   <div
-                    key={item._id} // use backend cart item _id
+                    key={item._id}
                     className="flex items-center space-x-3 border-b pb-2"
                   >
                     <img
@@ -176,7 +206,10 @@ const Nav: React.FC = () => {
                   Total: ${getTotal().toFixed(2)}
                 </p>
                 <button
-                  onClick={() => { setCartOpen(false); navigate("/checkout"); }}
+                  onClick={() => {
+                    setCartOpen(false);
+                    navigate("/checkout");
+                  }}
                   className="w-full bg-yellow-500 text-black py-2 mt-2 rounded"
                 >
                   Checkout
