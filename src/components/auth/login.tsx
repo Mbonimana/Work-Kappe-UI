@@ -40,8 +40,9 @@ const Login = () => {
       const user = res.data.existingUser;
       const token = res.data.accessToken || user.accessToken;
 
+      // ✅ Ensure token is a string
       localStorage.setItem("user", JSON.stringify(user));
-      localStorage.setItem("token", token);
+      localStorage.setItem("token", token || ""); // fix TS2345
 
       // ✅ fetch the cart for this logged-in user
       await fetchCart();
