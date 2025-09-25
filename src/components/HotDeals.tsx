@@ -4,13 +4,8 @@ import { Heart } from "lucide-react";
 function HotDeals() {
   return (
     <div>
-      <div className="
-        border-[0.2rem] border-yellow-300 
-        w-[80%] h-auto md:w-[30%] lg:w-[20rem]
-        p-8 
-        ml-10 sm:ml-[7rem] 
-        mb-4
-      ">
+      <div className="border-[0.2rem] border-yellow-300  w-[80%] h-auto md:w-[30%] lg:w-[20rem] p-8 ml-10 sm:ml-[7rem]  rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+    
         <h1 className="text-2xl font-semibold">HOT DEALS</h1>
 
         <div className="flex flex-row">
@@ -28,7 +23,7 @@ function HotDeals() {
         <img
           src="https://kapee.presslayouts.com/wp-content/uploads/2020/07/Apple-Watch-Series-5-White-2-300x350.jpg"
           alt="Apple Watch"
-          className="w-full object-contain"
+          className=" object-contain"
         />
 
         <div className="text-sm text-gray-600 mt-2">

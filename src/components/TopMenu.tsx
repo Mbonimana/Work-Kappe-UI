@@ -46,7 +46,7 @@ const TopMenu = () => {
   //   </div>
   return(
 
-    <div className=" h-12 flex items-center space-x-8 text-sm border border-gray-200 relative  w-full justify-center">
+    <div className=" h-12 flex items-center space-x-8 text-sm border border-gray-200 relative  w-full justify-center mt-[8.8rem] ">
     <select className="Select w-24 outline-none" name="" id="">
         <option value="">HOME</option>
         <option value="">SHOP</option>

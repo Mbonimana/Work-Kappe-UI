@@ -1,9 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Search, User, Heart, ShoppingBag, Menu, X } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useCart } from "./CartContext";
 
 const Nav: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [cartOpen, setCartOpen] = useState(false);
+  const [user, setUser] = useState<any>(null);
+  const navigate = useNavigate();
+  const { cart, removeFromCart, increaseQuantity, decreaseQuantity, getTotal, logout } = useCart();
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) setUser(JSON.parse(storedUser));
+  }, []);
+
+  const handleLogout = () => {
+    logout(); // clears cart in context and localStorage
+    setUser(null);
+    navigate("/");
+  };
 
   return (
     <nav className="w-full border-b fixed top-0 bg-white z-50">
@@ -36,18 +52,15 @@ const Nav: React.FC = () => {
           <a href="#">WELCOME TO OUR STORE!</a>
           <a href="#">BLOG</a>
           <a href="#">FAQ</a>
-          <Link to='/ContactUs'>Contact Us</Link>
-
-         
+          <Link to="/ContactUs">Contact Us</Link>
         </div>
       </div>
 
       {/* Main Navigation */}
       <div className="flex items-center justify-between px-4 py-3 md:px-6">
-        {/* Logo */}
-       <Link to={"/"}><h1 className="text-2xl font-bold">kapee.</h1>
-       </Link> 
-        {/* Hamburger Menu (Mobile) */}
+        <Link to={"/"}>
+          <h1 className="text-2xl font-bold">kapee.</h1>
+        </Link>
         <button
           className="md:hidden text-black"
           onClick={() => setMenuOpen(!menuOpen)}
@@ -55,7 +68,6 @@ const Nav: React.FC = () => {
           {menuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
 
-        {/* Search Bar */}
         <div className="hidden md:flex flex-1 mx-6 max-w-2xl">
           <input
             type="text"
@@ -73,55 +85,104 @@ const Nav: React.FC = () => {
           </button>
         </div>
 
-        {/* Icons */}
         <div className="hidden md:flex items-center space-x-6 text-sm font-medium">
           <div className="flex items-center space-x-1">
             <User size={20} />
-
-            
-
-             <Link to="/Login">Sign In</Link>
-
+            {user ? (
+              <>
+                <span>Hello, {user.fullnames.split(" ")[0]}</span>
+                <button onClick={handleLogout} className="text-red-500 ml-2">
+                  Logout
+                </button>
+              </>
+            ) : (
+              <Link to="/Login">Sign In</Link>
+            )}
           </div>
           <div className="flex items-center space-x-1">
             <Heart size={20} />
             <span>(0)</span>
           </div>
-          <div className="flex items-center space-x-1">
+          <div
+            className="flex items-center space-x-1 cursor-pointer"
+            onClick={() => setCartOpen(true)}
+          >
             <ShoppingBag size={20} />
-            <span>$0.00</span>
+            <span>({cart.length})</span>
           </div>
         </div>
       </div>
 
-      {/* Mobile Dropdown Menu */}
-      {menuOpen && (
-        <div className="md:hidden bg-gray-100 px-4 py-3 space-y-3">
-          {/* Search (mobile) */}
-          <div className="flex">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="w-full border border-gray-300 px-2 py-1 rounded-l focus:outline-none"
-            />
-            <button className="bg-black text-white px-3 rounded-r">
-              <Search size={18} />
+      {/* Cart Modal */}
+      {cartOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-end z-50">
+          <div className="bg-white w-80 h-[80%] mt-12 p-4 shadow-lg relative flex flex-col animate-fadeIn animation-delay-500">
+            <button
+              className="absolute top-3 right-3"
+              onClick={() => setCartOpen(false)}
+            >
+              <X size={22} />
             </button>
-          </div>
+            <h2 className="text-lg font-bold mb-4">Your Cart</h2>
+            {cart.length === 0 ? (
+              <p className="text-gray-500">Your cart is empty.</p>
+            ) : (
+              <div className="flex-1 overflow-y-auto space-y-3">
+                {cart.map((item) => (
+                  <div
+                    key={item._id} // use backend cart item _id
+                    className="flex items-center space-x-3 border-b pb-2"
+                  >
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="w-12 h-12 object-cover rounded"
+                    />
+                    <div className="flex-1">
+                      <p className="font-medium">{item.content}</p>
+                      <p className="text-sm text-gray-500">
+                        ${item.price.toFixed(2)}
+                      </p>
+                      <div className="flex items-center space-x-2 mt-1">
+                        <button
+                          onClick={() => decreaseQuantity(item._id!)}
+                          className="px-2 py-1 border rounded"
+                        >
+                          -
+                        </button>
+                        <span>{item.quantity}</span>
+                        <button
+                          onClick={() => increaseQuantity(item._id!)}
+                          className="px-2 py-1 border rounded"
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => removeFromCart(item._id!)}
+                      className="text-red-500"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
 
-          {/* Icons (mobile) */}
-          <div className="flex flex-col space-y-2 text-sm">
-            <Link to="/auth/login" className="flex items-center space-x-2">
-              <User size={18} /> <span>Sign In/span</span>
-            </Link>
-
-
-            <div className="flex items-center space-x-2">
-              <Heart size={18} /> <span>(0)</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <ShoppingBag size={18} /> <span>$0.00</span>
-            </div>
+            {cart.length > 0 && (
+              <div className="mt-4 border-t pt-4">
+                <p className="font-bold text-lg">
+                  Total: ${getTotal().toFixed(2)}
+                </p>
+                <button
+                  onClick={() => { setCartOpen(false); navigate("/checkout"); }}
+                  className="w-full bg-yellow-500 text-black py-2 mt-2 rounded"
+                >
+                  Checkout
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}

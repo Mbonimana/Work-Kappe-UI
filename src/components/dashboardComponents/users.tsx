@@ -91,7 +91,7 @@ const UserTable = () => {
             <th className="p-2">UserName</th>
             <th className="p-2">Email</th>
             <th className="p-2">Location</th>
-            <th className="p-2">role</th>
+            <th className="p-2">Role</th>
         
             
           </tr>

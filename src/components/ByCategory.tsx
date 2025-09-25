@@ -19,10 +19,10 @@ const ByCategory: React.FC = () => {
 
   return (
     <>
-    <div className="hidden m:hidden md:block mt-4 ml-10 w-64 border border-gray-200 rounded shadow-sm relative">
+    <div className="hidden m:hidden md:block mt-[-3rem] ml-10 w-64 border border-gray-200 rounded shadow-sm relative">
       
       <div
-        className="bg-yellow-400 text-black  px-4 mt-[-4rem]  py-2 flex justify-between items-center cursor-pointer h-12"
+        className="bg-yellow-400 text-black  px-4   py-2 flex justify-between items-center cursor-pointer h-12"
         
       >
         <span>SHOP BY CATEGORIES</span>

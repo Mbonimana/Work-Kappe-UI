@@ -26,7 +26,7 @@ const SettingsPage = () => {
               <label className="text-sm font-medium">SecondName</label>
               <input
                 type="text"
-                placeholder="USD"
+                placeholder="MBONIMANA"
                 className="w-full mt-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
@@ -44,18 +44,18 @@ const SettingsPage = () => {
           
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
-              <label className="text-sm font-medium">Email</label>
+              <label className="text-sm font-medium">Change Password</label>
               <input
                 type="email"
-                placeholder="admin@email.com"
+                placeholder="Enter Old Password"
                 className="w-full mt-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               />
             </div>
             <div>
-              <label className="text-sm font-medium">Change Password</label>
+              <label className="text-sm font-medium">Enter New Password</label>
               <input
                 type="password"
-                placeholder="New Password"
+                placeholder="Enter New Password"
                 className="w-full mt-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               />
             </div>

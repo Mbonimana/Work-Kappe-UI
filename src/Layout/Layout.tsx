@@ -7,7 +7,10 @@ const Layout=() => {
     return (
         <>
             <NavContainer/>
-            <Outlet/>
+            <main className="">
+<Outlet/>
+            </main>
+            
             
             <FooterContainer/>
             

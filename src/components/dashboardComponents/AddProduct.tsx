@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 interface ProductFormData {
   name: string;
@@ -27,10 +28,37 @@ const AddProduct: React.FC = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Submitting product:', formData);
-    
+    try {
+      // Map frontend fields to backend fields
+      const payload = {
+        prodName: formData.name,
+        prodPrice: formData.price,
+        ProdCat: formData.category,
+        prodDesc: formData.description,
+        productimage: formData.imageUrl,
+      };
+
+      const res = await axios.post(
+        'https://kappebackend.onrender.com/api/products/create-product',
+        payload
+      );
+
+      console.log('Product created:', res.data);
+      alert('Product added successfully!');
+      // Optionally, reset form
+      setFormData({
+        name: '',
+        price: 0,
+        category: '',
+        description: '',
+        imageUrl: '',
+      });
+    } catch (error) {
+      console.error('Error creating product:', error);
+      alert('Failed to add product. Check console for details.');
+    }
   };
 
   return (
