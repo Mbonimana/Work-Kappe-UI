@@ -48,35 +48,50 @@ const Registration = () => {
     return(
         <>
         
-        <div className=" flex justify-center items-center pt-[15%]">
-            <div className="h-[18rem] w-[19rem] bg-yellow-400 text-black p-6 ">
-                <h1 className="text-[1.6rem] font-semibold">Register Your Account</h1>
-               
-                
-            </div>
+        <div className="flex flex-col md:flex-row justify-center items-center pt-[10%] px-4 md:space-y-0">
+  {/* Left Panel */}
+  <div className="w-full max-w-sm bg-yellow-400 text-black p-6 rounded-md flex flex-col justify-center md:min-h-[18rem]">
+    <h1 className="text-[1.6rem] font-semibold">Register Your Account</h1>
+  </div>
 
-            <div className="h-[18rem] w-[21rem] bg-white-blue-500 text-white p-2 border border-gray-200 shadow-sm ">
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="p-4 flex flex-col  ">
-                    <input type="text" placeholder="Enter Full Names" className="border mt-3 border-gray-300 h-[2.5rem] w-[17rem] text-black  text-sm font-semibold " {...register("fullnames")} />
-                    <input type="text" placeholder="Enter your Email Address" className="border mt-2 border-gray-300 h-[2.5rem] w-[17rem] text-black  text-sm font-semibold " {...register("email")} />
-
-                    <input type="password" placeholder="Enter Password" className="border mt-3 border-gray-300 h-[2.5rem] w-[17rem] text-black  text-sm font-semibold " {...register("password")} />
-
-                    <input type="text" placeholder="Enter Phone Number" className="border mt-3 border-gray-300 h-[2.5rem] w-[17rem] text-black  text-sm font-semibold " {...register("phone")} />
-
-            
-                    <button className=" border mt-2  bg-yellow-400 h-[2.5rem] w-[17rem] text-black  text-sm font-semibold hover:text-yellow-400 hover:bg-black ">Register</button>
-
-                   
-                    
-                    </div>
-                </form>
-
-                
-
-            </div>
-        </div>
+  {/* Right Panel */}
+  <div className="w-full max-w-sm bg-white-blue-500 text-white p-4 border border-gray-200 shadow-sm rounded-md md:min-h-[18rem] flex items-center md:-ml-[1px]">
+    <form onSubmit={handleSubmit(onSubmit)} className="w-full">
+      <div className="flex flex-col">
+        <input
+          type="text"
+          placeholder="Enter Full Names"
+          className="border mt-3 border-gray-300 h-[2.5rem] w-full text-black text-sm font-semibold px-2"
+          {...register("fullnames")}
+        />
+        <input
+          type="text"
+          placeholder="Enter your Email Address"
+          className="border mt-2 border-gray-300 h-[2.5rem] w-full text-black text-sm font-semibold px-2"
+          {...register("email")}
+        />
+        <input
+          type="password"
+          placeholder="Enter Password"
+          className="border mt-3 border-gray-300 h-[2.5rem] w-full text-black text-sm font-semibold px-2"
+          {...register("password")}
+        />
+        <input
+          type="text"
+          placeholder="Enter Phone Number"
+          className="border mt-3 border-gray-300 h-[2.5rem] w-full text-black text-sm font-semibold px-2"
+          {...register("phone")}
+        />
+        <button
+          type="submit"
+          className="border mt-2 bg-yellow-400 h-[2.5rem] w-full text-black text-sm font-semibold hover:text-yellow-400 hover:bg-black"
+        >
+          Register
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
 
         </>
     )
