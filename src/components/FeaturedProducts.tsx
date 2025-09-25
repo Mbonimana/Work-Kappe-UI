@@ -14,6 +14,17 @@ type Card = {
   image: string;
 };
 
+// ✅ Type for Axios response
+type ProductResponse = {
+  products: {
+    _id: string;
+    ProdCat: string;
+    prodName: string;
+    prodPrice: string | number;
+    productimage: string;
+  }[];
+};
+
 const FeaturedProducts = () => {
   const navigate = useNavigate();
   const [cards, setCards] = useState<Card[]>([]);
@@ -22,15 +33,16 @@ const FeaturedProducts = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await axios.get(
+        //  Type the response
+        const res = await axios.get<ProductResponse>(
           "https://kappebackend.onrender.com/api/products/get-products"
         );
 
-        const products = res.data.products.map((p: any) => ({
-          id: p._id,               
+        const products = res.data.products.map((p) => ({
+          id: p._id,
           title: p.ProdCat,
           content: p.prodName,
-          price: Number(p.prodPrice), 
+          price: Number(p.prodPrice),
           off: "15% OFF",
           image: p.productimage,
         }));
@@ -49,7 +61,7 @@ const FeaturedProducts = () => {
     navigate(`/ProductView/${id}`);
   };
 
-  // ✅ handle add to cart with login check
+  // handle add to cart with login check
   const handleAddToCart = async (card: Card) => {
     const token = localStorage.getItem("token");
 

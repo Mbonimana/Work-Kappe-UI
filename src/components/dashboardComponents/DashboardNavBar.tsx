@@ -1,17 +1,12 @@
 import { Settings, LogOutIcon, MessageCircle } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 
 function DashboardNabar() {
   const navigate = useNavigate();
 
-  // Optional: if you want to track the user locally
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user") || "null"));
-
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    setUser(null); // update state
     navigate("/"); // redirect to login page
   };
 

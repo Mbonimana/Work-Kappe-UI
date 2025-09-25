@@ -12,6 +12,17 @@ type Product = {
   image: string;
 };
 
+// ✅ Type for API response
+type ProductResponse = {
+  products: {
+    _id: string;
+    prodName: string;
+    prodDesc: string;
+    prodPrice: string | number;
+    productimage: string;
+  }[];
+};
+
 export default function ProductView() {
   const { id } = useParams<{ id: string }>();
   const [product, setProduct] = useState<Product | null>(null);
@@ -21,12 +32,13 @@ export default function ProductView() {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await axios.get(
+        // ✅ Type the Axios response
+        const res = await axios.get<ProductResponse>(
           "https://kappebackend.onrender.com/api/products/get-products"
         );
 
         // find the product by MongoDB _id
-        const p = res.data.products.find((prod: any) => prod._id === id);
+        const p = res.data.products.find((prod) => prod._id === id);
 
         if (p) {
           setProduct({
@@ -82,10 +94,8 @@ export default function ProductView() {
         {/* Right: Product Details */}
         <div className="flex flex-col justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-gray-800">
-              {product.content}
-            </h1>
-            <p className="text-sm text-gray-500 mt-1">{product.title}</p>
+            <h1 className="text-2xl font-bold text-gray-800">{product.title}</h1>
+            <p className="text-sm text-gray-500 mt-1">{product.content}</p>
 
             <div className="flex items-center mt-4 space-x-4">
               <span className="text-3xl font-bold text-green-600">

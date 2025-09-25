@@ -3,6 +3,7 @@ import { Edit, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+// ✅ Product data type
 export type ProductData = {
   productId: string;
   ProductName: string;
@@ -13,6 +14,24 @@ export type ProductData = {
   productimage?: string;
 };
 
+// ✅ Response type for GET products
+type GetProductsResponse = {
+  products: Array<{
+    _id: string;
+    prodName: string;
+    prodPrice: number;
+    ProdCat: string;
+    prodDesc: string;
+    stock?: number;
+    productimage?: string;
+  }>;
+};
+
+// ✅ Response type for DELETE product
+type DeleteProductResponse = {
+  message: string;
+};
+
 const ProductTable = () => {
   const [products, setProducts] = useState<ProductData[]>([]);
   const [deleteId, setDeleteId] = useState<string | null>(null);
@@ -21,10 +40,11 @@ const ProductTable = () => {
   // Fetch products from backend
   const fetchProducts = async () => {
     try {
-      const res = await axios.get(
+      const res = await axios.get<GetProductsResponse>(
         "https://kappebackend.onrender.com/api/products/get-products"
       );
-      const mappedProducts: ProductData[] = res.data.products.map((p: any) => ({
+
+      const mappedProducts: ProductData[] = res.data.products.map((p) => ({
         productId: p._id,
         ProductName: p.prodName,
         ProductPrice: p.prodPrice,
@@ -33,6 +53,7 @@ const ProductTable = () => {
         Stock: p.stock || 0,
         productimage: p.productimage,
       }));
+
       setProducts(mappedProducts);
     } catch (err) {
       console.error("Error fetching products:", err);
@@ -48,19 +69,19 @@ const ProductTable = () => {
     if (!deleteId) return;
 
     try {
-      const res = await axios.delete(
+      const res = await axios.delete<DeleteProductResponse>(
         `https://kappebackend.onrender.com/api/products/delete-product/${deleteId}`
       );
 
       if (res.status === 200) {
         setProducts(products.filter((p) => p.productId !== deleteId));
-        alert(res.data.message || " Product deleted successfully!");
+        alert(res.data.message || "Product deleted successfully!");
       } else {
-        alert(" Failed to delete product.");
+        alert("Failed to delete product.");
       }
     } catch (err: any) {
       console.error("Error deleting product:", err.response?.data || err.message);
-      alert(" Error deleting product. Check console.");
+      alert("Error deleting product. Check console.");
     } finally {
       setDeleteId(null);
       setShowConfirm(false);

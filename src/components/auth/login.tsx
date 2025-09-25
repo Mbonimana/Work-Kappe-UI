@@ -9,6 +9,18 @@ interface FormData {
   password: string;
 }
 
+// ✅ Type for Axios login response
+type LoginResponse = {
+  existingUser: {
+    _id: string;
+    email: string;
+    userRole: "admin" | "client";
+    accessToken?: string;
+    [key: string]: any; // for any other fields returned
+  };
+  accessToken?: string;
+};
+
 const Login = () => {
   const navigate = useNavigate();
   const { register, handleSubmit, reset } = useForm<FormData>();
@@ -16,10 +28,14 @@ const Login = () => {
 
   const onLogin = async (data: FormData) => {
     try {
-      const res = await axios.post(`https://kappebackend.onrender.com/api/user/userLogin`, {
-        email: data.email,
-        password: data.password,
-      });
+      // ✅ Type the response
+      const res = await axios.post<LoginResponse>(
+        `https://kappebackend.onrender.com/api/user/userLogin`,
+        {
+          email: data.email,
+          password: data.password,
+        }
+      );
 
       const user = res.data.existingUser;
       const token = res.data.accessToken || user.accessToken;
@@ -40,7 +56,6 @@ const Login = () => {
       Notify.failure("Login Failed");
     }
   };
-
 
   return (
     <div className="flex justify-center items-center pt-[15%]">
