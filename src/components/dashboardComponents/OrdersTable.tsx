@@ -34,7 +34,7 @@ const OrderTable: React.FC = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/orders", {
+        const res = await fetch("http://localhost:5000/api/orders/getallorders", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
