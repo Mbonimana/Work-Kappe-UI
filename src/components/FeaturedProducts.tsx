@@ -1,4 +1,4 @@
-import { Heart, Eye, ShoppingBag } from "lucide-react"; 
+import { Eye, ShoppingBag } from "lucide-react"; 
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
