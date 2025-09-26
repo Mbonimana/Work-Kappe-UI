@@ -6,6 +6,8 @@ export type UserData = {
   email: string;
   phone: string;
   userRole: string;
+  createdAt: string;  // ✅ now included
+  updatedAt?: string;
 };
 
 const UserTable: React.FC = () => {
@@ -15,7 +17,7 @@ const UserTable: React.FC = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await fetch("https://kappebackend.onrender.com/api/user/getAllUsers", {
+        const res = await fetch("http://localhost:5000/api/users", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
