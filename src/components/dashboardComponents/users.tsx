@@ -17,7 +17,7 @@ const UserTable: React.FC = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/users", {
+        const res = await fetch("https://kappebackend.onrender.com/api/user/getAllUsers", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
