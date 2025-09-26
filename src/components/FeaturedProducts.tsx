@@ -43,7 +43,7 @@ const FeaturedProducts = () => {
           title: p.ProdCat,
           content: p.prodName,
           price: Number(p.prodPrice),
-          off: "15% OFF",
+          off: "New",
           image: p.productimage,
         }));
 
