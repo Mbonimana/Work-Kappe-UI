@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 
 interface ProductFormData {
   name: string;
@@ -11,10 +11,10 @@ interface ProductFormData {
 
 const AddProduct: React.FC = () => {
   const [formData, setFormData] = useState<ProductFormData>({
-    name: '',
+    name: "",
     price: 0,
-    category: '',
-    description: '',
+    category: "",
+    description: "",
     imageFile: null,
   });
 
@@ -23,12 +23,12 @@ const AddProduct: React.FC = () => {
   ) => {
     const { name, value, files } = e.target as HTMLInputElement;
 
-    if (name === 'imageFile' && files) {
-      setFormData(prev => ({ ...prev, imageFile: files[0] }));
+    if (name === "imageFile" && files && files[0]) {
+      setFormData((prev) => ({ ...prev, imageFile: files[0] }));
     } else {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
-        [name]: name === 'price' ? parseFloat(value) : value,
+        [name]: name === "price" ? parseFloat(value) : value,
       }));
     }
   };
@@ -37,52 +37,42 @@ const AddProduct: React.FC = () => {
     e.preventDefault();
 
     if (!formData.imageFile) {
-      alert('Please select an image file!');
+      alert("Please select an image file!");
       return;
     }
 
     try {
       const data = new FormData();
-      data.append('prodName', formData.name);
-      data.append('prodPrice', formData.price.toString());
-      data.append('ProdCat', formData.category);
-      data.append('prodDesc', formData.description);
-      data.append('image', formData.imageFile); // Must match multer field name
+      data.append("prodName", formData.name);
+      data.append("prodDesc", formData.description);
+      data.append("prodPrice", formData.price.toString());
+      data.append("ProdCat", formData.category);
+      data.append("image", formData.imageFile); // Must match backend
 
       const res = await axios.post(
-        'https://kappebackend.onrender.com/api/products/create-product',
+        "https://kappebackend.onrender.com/api/products/create-product",
         data,
         {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
+          headers: { "Content-Type": "multipart/form-data" },
         }
       );
 
-      console.log('Product created:', res.data);
-      alert('Product added successfully!');
+      console.log("Product created:", res.data);
+      alert("Product added successfully!");
 
       // Reset form
-      setFormData({
-        name: '',
-        price: 0,
-        category: '',
-        description: '',
-        imageFile: null,
-      });
-
-      // Reset file input value manually
-      (document.getElementById('imageFileInput') as HTMLInputElement).value = '';
+      setFormData({ name: "", price: 0, category: "", description: "", imageFile: null });
+      (document.getElementById("imageFileInput") as HTMLInputElement).value = "";
     } catch (error) {
-      console.error('Error creating product:', error);
-      alert('Failed to add product. Check console for details.');
+      console.error("Error creating product:", error);
+      alert("Failed to add product. Check console for details.");
     }
   };
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-[40%] mx-auto p-2 mt-16 ml-[32%] bg-white shadow-md rounded-lg space-y-3"
+      className="w-[40%] mx-auto p-4 mt-16 bg-white shadow-md rounded-lg space-y-4"
     >
       <h2 className="text-xl font-bold text-gray-800">Add New Product</h2>
 
@@ -94,7 +84,7 @@ const AddProduct: React.FC = () => {
           value={formData.name}
           onChange={handleChange}
           required
-          className="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500"
+          className="mt-1 block w-full border border-gray-300 rounded-md p-2"
         />
       </div>
 
@@ -106,7 +96,7 @@ const AddProduct: React.FC = () => {
           value={formData.price}
           onChange={handleChange}
           required
-          className="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500"
+          className="mt-1 block w-full border border-gray-300 rounded-md p-2"
         />
       </div>
 
@@ -117,7 +107,7 @@ const AddProduct: React.FC = () => {
           value={formData.category}
           onChange={handleChange}
           required
-          className="mt-1 block w-full border border-gray-300 rounded-md p-2 bg-white focus:ring-blue-500 focus:border-blue-500"
+          className="mt-1 block w-full border border-gray-300 rounded-md p-2 bg-white"
         >
           <option value="">Select category</option>
           <option value="electronics">Electronics</option>
@@ -134,7 +124,7 @@ const AddProduct: React.FC = () => {
           value={formData.description}
           onChange={handleChange}
           rows={4}
-          className="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500"
+          className="mt-1 block w-full border border-gray-300 rounded-md p-2"
         />
       </div>
 
