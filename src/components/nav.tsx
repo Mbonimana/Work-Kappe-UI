@@ -130,7 +130,7 @@ const Nav: React.FC = () => {
             )}
           </div>
           <div className="flex items-center space-x-1">
-            <Heart size={20} />
+            <Package size={20} />
             <span>(0)</span>
           </div>
           <div
