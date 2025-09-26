@@ -25,9 +25,15 @@ interface UserData {
 
 interface OrderData {
   _id: string;
-  userId: string;
-  total: number;
-  status: string; // we keep it flexible
+  user: string;
+  items: any[];
+  totalPrice: number;
+  customerName: string;
+  email: string;
+  address: string;
+  phone: string;
+  paymentMode: string;
+  status: string; // "Paid" | "Pending" | "Canceled"
   createdAt: string;
 }
 
@@ -61,13 +67,16 @@ const PerformancePage: React.FC = () => {
   }, []);
 
   // --- Stats ---
-  const totalSales = orders.reduce((sum, o) => sum + (o.total || 0), 0);
+  const totalPaidSales = orders
+    .filter((o) => o.status?.toLowerCase() === "paid")
+    .reduce((sum, o) => sum + (o.totalPrice || 0), 0);
+
   const refunds = orders
-    .filter((o) => o.status?.toLowerCase() === "cancelled")
-    .reduce((sum, o) => sum + (o.total || 0), 0);
+    .filter((o) => o.status?.toLowerCase() === "canceled")
+    .reduce((sum, o) => sum + (o.totalPrice || 0), 0);
 
   const stats = [
-    { title: "Total Sales", value: `$${totalSales.toLocaleString()}`, icon: DollarSign },
+    { title: "Total Paid Sales", value: `$${totalPaidSales.toLocaleString()}`, icon: DollarSign },
     { title: "Orders", value: orders.length.toString(), icon: ShoppingBag },
     { title: "Customers", value: users.length.toString(), icon: Users },
     { title: "Refunds", value: `$${refunds.toLocaleString()}`, icon: RotateCcw },
@@ -84,10 +93,12 @@ const PerformancePage: React.FC = () => {
 
   // --- Monthly Sales (Line Chart) ---
   const monthlySalesMap: { [key: string]: number } = {};
-  orders.forEach((o) => {
-    const month = new Date(o.createdAt).toLocaleString("default", { month: "short" });
-    monthlySalesMap[month] = (monthlySalesMap[month] || 0) + (o.total || 0);
-  });
+  orders
+    .filter((o) => o.status?.toLowerCase() === "paid") // only paid orders contribute to sales
+    .forEach((o) => {
+      const month = new Date(o.createdAt).toLocaleString("default", { month: "short" });
+      monthlySalesMap[month] = (monthlySalesMap[month] || 0) + (o.totalPrice || 0);
+    });
 
   const salesData = Object.keys(monthlySalesMap).map((month) => ({
     month,
@@ -126,7 +137,7 @@ const PerformancePage: React.FC = () => {
         {/* Sales Line Chart */}
         <div className="bg-white rounded-xl shadow-md p-4">
           <h3 className="text-lg font-semibold text-slate-800 mb-4">
-            Monthly Sales
+            Monthly Paid Sales
           </h3>
           <ResponsiveContainer width="100%" height={250}>
             <LineChart data={salesData}>
@@ -144,7 +155,7 @@ const PerformancePage: React.FC = () => {
           </ResponsiveContainer>
         </div>
 
-        {/* Orders Pie Chart */}
+        {/* Paid Orders Pie Chart */}
         <div className="bg-white rounded-xl shadow-md p-6">
           <h3 className="text-lg font-semibold text-slate-800 mb-4">
             Paid Orders
