@@ -6,7 +6,7 @@ interface ProductFormData {
   price: number;
   category: string;
   description: string;
-  imageUrl: string;
+  imageFile: File | null;
 }
 
 const AddProduct: React.FC = () => {
@@ -15,46 +15,64 @@ const AddProduct: React.FC = () => {
     price: 0,
     category: '',
     description: '',
-    imageUrl: '',
+    imageFile: null,
   });
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: name === 'price' ? parseFloat(value) : value,
-    }));
+    const { name, value, files } = e.target as HTMLInputElement;
+
+    if (name === 'imageFile' && files) {
+      setFormData(prev => ({ ...prev, imageFile: files[0] }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: name === 'price' ? parseFloat(value) : value,
+      }));
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!formData.imageFile) {
+      alert('Please select an image file!');
+      return;
+    }
+
     try {
-      // Map frontend fields to backend fields
-      const payload = {
-        prodName: formData.name,
-        prodPrice: formData.price,
-        ProdCat: formData.category,
-        prodDesc: formData.description,
-        productimage: formData.imageUrl,
-      };
+      const data = new FormData();
+      data.append('prodName', formData.name);
+      data.append('prodPrice', formData.price.toString());
+      data.append('ProdCat', formData.category);
+      data.append('prodDesc', formData.description);
+      data.append('image', formData.imageFile); // Must match multer field name
 
       const res = await axios.post(
         'https://kappebackend.onrender.com/api/products/create-product',
-        payload
+        data,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
       );
 
       console.log('Product created:', res.data);
       alert('Product added successfully!');
-      // Optionally, reset form
+
+      // Reset form
       setFormData({
         name: '',
         price: 0,
         category: '',
         description: '',
-        imageUrl: '',
+        imageFile: null,
       });
+
+      // Reset file input value manually
+      (document.getElementById('imageFileInput') as HTMLInputElement).value = '';
     } catch (error) {
       console.error('Error creating product:', error);
       alert('Failed to add product. Check console for details.');
@@ -121,13 +139,15 @@ const AddProduct: React.FC = () => {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">Image URL</label>
+        <label className="block text-sm font-medium text-gray-700">Product Image</label>
         <input
-          type="text"
-          name="imageUrl"
-          value={formData.imageUrl}
+          type="file"
+          id="imageFileInput"
+          name="imageFile"
+          accept="image/*"
           onChange={handleChange}
-          className="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500"
+          required
+          className="mt-1 block w-full"
         />
       </div>
 
