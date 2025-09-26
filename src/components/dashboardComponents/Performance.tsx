@@ -27,7 +27,7 @@ interface OrderData {
   _id: string;
   userId: string;
   total: number;
-  status: "Completed" | "Pending" | "Cancelled";
+  status: string; // we keep it flexible
   createdAt: string;
 }
 
@@ -63,7 +63,7 @@ const PerformancePage: React.FC = () => {
   // --- Stats ---
   const totalSales = orders.reduce((sum, o) => sum + (o.total || 0), 0);
   const refunds = orders
-    .filter((o) => o.status === "Cancelled")
+    .filter((o) => o.status?.toLowerCase() === "cancelled")
     .reduce((sum, o) => sum + (o.total || 0), 0);
 
   const stats = [
@@ -73,14 +73,14 @@ const PerformancePage: React.FC = () => {
     { title: "Refunds", value: `$${refunds.toLocaleString()}`, icon: RotateCcw },
   ];
 
-  // --- Orders by status (Pie Chart) ---
+  // --- Only show PAID orders in Pie Chart ---
+  const paidOrdersCount = orders.filter((o) => o.status?.toLowerCase() === "paid").length;
+
   const orderStatusData = [
-    { name: "Completed", value: orders.filter((o) => o.status === "Completed").length },
-    { name: "Pending", value: orders.filter((o) => o.status === "Pending").length },
-    { name: "Cancelled", value: orders.filter((o) => o.status === "Cancelled").length },
+    { name: "Paid Orders", value: paidOrdersCount },
   ];
 
-  const COLORS = ["#16a34a", "#facc15", "#dc2626"]; // green, yellow, red
+  const COLORS = ["#16a34a"]; // only green
 
   // --- Monthly Sales (Line Chart) ---
   const monthlySalesMap: { [key: string]: number } = {};
@@ -147,7 +147,7 @@ const PerformancePage: React.FC = () => {
         {/* Orders Pie Chart */}
         <div className="bg-white rounded-xl shadow-md p-6">
           <h3 className="text-lg font-semibold text-slate-800 mb-4">
-            Orders by Status
+            Paid Orders
           </h3>
           <ResponsiveContainer width="90%" height={250}>
             <PieChart>
@@ -155,17 +155,13 @@ const PerformancePage: React.FC = () => {
                 data={orderStatusData}
                 cx="50%"
                 cy="50%"
-                labelLine={false}
                 outerRadius={90}
-                fill="#8884d8"
+                fill="#16a34a"
                 dataKey="value"
                 label
               >
                 {orderStatusData.map((_entry, index) => (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={COLORS[index % COLORS.length]}
-                  />
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
               <Tooltip />
