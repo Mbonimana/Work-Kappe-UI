@@ -1,4 +1,4 @@
-everything is working great but arrange these data more professsionaly"import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const statusStyles: Record<string, string> = {
   Paid: "w-24 text-center px-2 py-1 rounded-lg bg-green-100 text-green-700 font-medium",
