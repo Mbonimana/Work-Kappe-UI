@@ -97,7 +97,7 @@ const FeaturedProducts = () => {
               <div className="bg-green-500 text-white px-2 py-1 text-xs rounded">
                 {card.off}
               </div>
-              <Heart size={18} color="gray" />
+             
             </div>
 
             <img
