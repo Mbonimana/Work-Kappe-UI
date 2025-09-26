@@ -10,13 +10,20 @@ type OrderItem = {
   product: string;
   title: string;
   quantity: number;
+  price: number;
+  image?: string;
 };
 
 type Order = {
   _id: string;
   customerName: string;
+  email: string;
   address: string;
+  phone: string;
+  paymentMode: string;
+  totalPrice: number;
   status: "Paid" | "Pending" | "Canceled";
+  createdAt: string;
   items: OrderItem[];
 };
 
@@ -27,7 +34,7 @@ const OrderTable: React.FC = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/orders/getallorders", {
+        const res = await fetch("http://localhost:5000/api/orders", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -58,33 +65,76 @@ const OrderTable: React.FC = () => {
           <tr>
             <th className="p-2">Product</th>
             <th className="p-2">Customer</th>
-            <th className="p-2">Location</th>
+            <th className="p-2">Address</th>
+            <th className="p-2">Phone</th>
+            <th className="p-2">Payment</th>
             <th className="p-2">Quantity</th>
+            <th className="p-2">Total</th>
             <th className="p-2">Status</th>
+            <th className="p-2">Date</th>
           </tr>
         </thead>
         <tbody>
           {orders.length > 0 ? (
             orders.map((order) =>
               order.items.map((item, index) => (
-                <tr key={`${order._id}-${index}`} className="border-b hover:bg-gray-50">
-                  <td className="p-3">{item.title}</td>
+                <tr
+                  key={`${order._id}-${index}`}
+                  className="border-b hover:bg-gray-50"
+                >
+                  {/* Product (item from array) */}
+                  <td className="p-3">
+                    <div className="flex items-center space-x-2">
+                      {item.image && (
+                        <img
+                          src={item.image}
+                          alt={item.title}
+                          className="w-10 h-10 object-cover rounded"
+                        />
+                      )}
+                      <span>{item.title}</span>
+                    </div>
+                  </td>
+
+                  {/* Order-level info */}
                   <td className="p-3">{order.customerName}</td>
                   <td className="p-3">{order.address}</td>
+                  <td className="p-3">{order.phone}</td>
+                  <td className="p-3">{order.paymentMode}</td>
+
+                  {/* Item quantity */}
                   <td className="p-3">{item.quantity}</td>
-                  <td className="p-3">
-                    <span
-                      className={`px-2 py-1 rounded-full text-xs font-medium ${statusStyles[order.status]}`}
-                    >
-                      {order.status}
-                    </span>
-                  </td>
+
+                  {/* Order total (same for all items in same order) */}
+                  {index === 0 ? (
+                    <td className="p-3" rowSpan={order.items.length}>
+                      ${order.totalPrice}
+                    </td>
+                  ) : null}
+
+                  {/* Status */}
+                  {index === 0 ? (
+                    <td className="p-3" rowSpan={order.items.length}>
+                      <span
+                        className={`px-2 py-1 rounded-full text-xs font-medium ${statusStyles[order.status]}`}
+                      >
+                        {order.status}
+                      </span>
+                    </td>
+                  ) : null}
+
+                  {/* Date */}
+                  {index === 0 ? (
+                    <td className="p-3" rowSpan={order.items.length}>
+                      {new Date(order.createdAt).toLocaleDateString()}
+                    </td>
+                  ) : null}
                 </tr>
               ))
             )
           ) : (
             <tr>
-              <td colSpan={5} className="p-3 text-center text-gray-500">
+              <td colSpan={9} className="p-3 text-center text-gray-500">
                 No orders found
               </td>
             </tr>
