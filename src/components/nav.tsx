@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Search, User, ShoppingBag, Menu, Package , LogOut, X } from "lucide-react";
+import { Search, User, ShoppingBag, Menu, LogOut, X } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "./CartContext";
 
@@ -108,7 +108,7 @@ const Nav: React.FC = () => {
             )}
           </div>
           <div className="flex items-center space-x-1">
-            <Package size={20} />
+           
             
           </div>
        
@@ -132,7 +132,7 @@ const Nav: React.FC = () => {
             )}
           </div>
           <div className="flex items-center space-x-1">
-            <Package size={20} />
+           
             <span>(0)</span>
           </div>
           <div
