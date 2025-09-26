@@ -36,7 +36,7 @@ const Checkout: React.FC = () => {
 
     try {
       const res = await fetch(
-        "https://kappebackend.onrender.com/api/orders/checkout",
+        "http://localhost:5000/api/orders/checkout",
         {
           method: "POST",
           headers: {
