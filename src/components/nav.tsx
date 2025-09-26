@@ -87,6 +87,14 @@ const Nav: React.FC = () => {
 
         <div className="hidden md:flex items-center space-x-6 text-sm font-medium">
           <div className="flex items-center space-x-1">
+               <div
+            className="flex items-center space-x-1 cursor-pointer"
+            onClick={() => setCartOpen(true)}
+          >
+            <ShoppingBag size={20} />
+            <span>({cart.length})</span>
+          </div>
+            
             <User size={20} />
             {user ? (
               <>
@@ -103,13 +111,7 @@ const Nav: React.FC = () => {
             <Package size={20} />
             
           </div>
-          <div
-            className="flex items-center space-x-1 cursor-pointer"
-            onClick={() => setCartOpen(true)}
-          >
-            <ShoppingBag size={20} />
-            <span>({cart.length})</span>
-          </div>
+       
         </div>
       </div>
 
