@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Search, User, Heart, ShoppingBag, Menu, Package , Logout, X } from "lucide-react";
+import { Search, User, ShoppingBag, Menu, Package , LogOut, X } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "./CartContext";
 
@@ -92,7 +92,7 @@ const Nav: React.FC = () => {
               <>
                 <span>Hello, {user.fullnames.split(" ")[0]}</span>
                 <button onClick={handleLogout} className="text-red-500 ml-2">
-                  <Logout size={20} />
+                  <LogOut size={20} />
                 </button>
               </>
             ) : (
