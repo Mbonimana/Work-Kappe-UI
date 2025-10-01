@@ -50,7 +50,7 @@ const AddProduct: React.FC = () => {
       data.append("image", formData.imageFile); // Must match backend
 
       const res = await axios.post(
-        "http://localhost:5000/api/products/create-product",
+        "https://kappebackend.onrender.com/api/products/create-product",
         data,
         {
           headers: { "Content-Type": "multipart/form-data" },

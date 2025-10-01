@@ -17,7 +17,8 @@ import Login from './components/auth/login';
 import Project from './components/project';
 import ViewTableData from './components/ViewTableData';
 import ProductView from './components/ProductView';
-
+import ForgotPassword from './components/auth/ForgotPasswordOTP';
+import VerifyOTP from './components/auth/VerifyOTP';
 import Checkout from './components/checkout';
 // ✅ Import CartProvider
 import { CartProvider } from './components/CartContext';
@@ -42,6 +43,8 @@ function App() {
 
           <Route path='/Login' element={<Login />} />
           <Route path='/Registration' element={<Registration />} />
+          <Route path='/forgotpassword' element={<ForgotPassword/>} />
+          <Route path='/verify-otp' element={<VerifyOTP/>} />
 
           <Route path="/" element={<DashboardLayout />}>
             <Route path="/orders" element={<Orders />} />
