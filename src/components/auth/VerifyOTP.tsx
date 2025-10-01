@@ -3,15 +3,15 @@ import axios from "axios";
 import { Notify } from "notiflix";
 import { useNavigate, useLocation } from "react-router-dom";
 
-
 interface FormData {
   email: string;
   otp: string;
   newPassword: string;
   confirmPassword: string;
 }
-interface ResetPasswordResponse{
+interface ResetPasswordResponse {
   message:string;
+
 }
 
 const VerifyOTP = () => {
@@ -51,7 +51,7 @@ Notify.success(res.data.message || "Password reset successful");
       console.error("Reset failed:", error);
 
       // Check if error is Axios error
-      if (axios.AxiosError(error)) {
+      if ((error)) {
         const status = error.response?.status;
         const message = error.response?.data?.message;
 
