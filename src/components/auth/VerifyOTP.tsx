@@ -3,11 +3,15 @@ import axios from "axios";
 import { Notify } from "notiflix";
 import { useNavigate, useLocation } from "react-router-dom";
 
+
 interface FormData {
   email: string;
   otp: string;
   newPassword: string;
   confirmPassword: string;
+}
+interface ResetPasswordResponse{
+  message:string;
 }
 
 const VerifyOTP = () => {
@@ -28,17 +32,18 @@ const VerifyOTP = () => {
         return;
       }
 
-      const res = await axios.post(
-        `http://localhost:5000/api/user/reset-password`, // backend endpoint
-        {
-          email: data.email,
-          otp: data.otp,
-          newPassword: data.newPassword,
-          confirmPassword: data.confirmPassword,
-        }
-      );
+      
+const res = await axios.post<ResetPasswordResponse>(
+  "http://localhost:5000/api/user/reset-password",
+  {
+    email: data.email,
+    otp: data.otp,
+    newPassword: data.newPassword,
+    confirmPassword: data.confirmPassword,
+  }
+);
 
-      Notify.success(res.data.message || "Password reset successful");
+Notify.success(res.data.message || "Password reset successful");
       reset();
       navigate("/login"); // redirect to login
 
@@ -46,7 +51,7 @@ const VerifyOTP = () => {
       console.error("Reset failed:", error);
 
       // Check if error is Axios error
-      if (axios.isAxiosError(error)) {
+      if (axios.AxiosError(error)) {
         const status = error.response?.status;
         const message = error.response?.data?.message;
 

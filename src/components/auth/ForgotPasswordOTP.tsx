@@ -7,31 +7,32 @@ interface FormData {
   email: string;
 }
 
+interface OTPResponse {
+  message: string;
+}
+
 const ForgotPassword = () => {
   const { register, handleSubmit, reset } = useForm<FormData>();
   const navigate = useNavigate();
 
-  const onSendOTP = async (data: FormData) => {
-    try {
-      const res = await axios.post(
-        `https://kappebackend.onrender.com/api/user/send-otp`, // backend endpoint
-        { email: data.email }
-      );
+ const onSendOTP = async (data: FormData) => {
+  try {
+    const res = await axios.post<OTPResponse>(
+      `https://kappebackend.onrender.com/api/user/send-otp`,
+      { email: data.email }
+    );
 
-      Notify.success(res.data.message || "OTP Sent Successfully");
+    Notify.success(res.data.message || "OTP Sent Successfully");
 
-      // Pass email to next step (verify OTP form)
-      navigate("/verify-otp", { state: { email: data.email } });
-
-      reset();
-    } catch (error: any) {
-      console.error("Error sending OTP", error);
-      Notify.failure(
-        error.response?.data?.message || "Failed to send OTP. Try again."
-      );
-    }
-  };
-
+    navigate("/verify-otp", { state: { email: data.email } });
+    reset();
+  } catch (error: any) {
+    console.error("Error sending OTP", error);
+    Notify.failure(
+      error.response?.data?.message || "Failed to send OTP. Try again."
+    );
+  }
+};
   return (
     <div className="flex flex-col justify-center items-center pt-[10%] px-4">
       <div className="w-full max-w-sm bg-white p-6 border border-gray-200 shadow-md rounded-md">
