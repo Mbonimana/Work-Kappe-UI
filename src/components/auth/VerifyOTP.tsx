@@ -34,7 +34,7 @@ const VerifyOTP = () => {
 
       
 const res = await axios.post<ResetPasswordResponse>(
-  "http://localhost:5000/api/user/reset-password",
+  "https://kappebackend.onrender.com/api/user/reset-password",
   {
     email: data.email,
     otp: data.otp,
