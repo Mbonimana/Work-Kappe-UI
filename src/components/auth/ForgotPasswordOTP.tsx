@@ -18,7 +18,7 @@ const ForgotPassword = () => {
  const onSendOTP = async (data: FormData) => {
   try {
     const res = await axios.post<OTPResponse>(
-      `http://localhost:5000/api/user/send-otp`,
+      `https://kappebackend.onrender.com/api/user/send-otp`,
       { email: data.email }
     );
 

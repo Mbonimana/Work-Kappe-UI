@@ -14,6 +14,18 @@ const Nav: React.FC = () => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) setUser(JSON.parse(storedUser));
   }, []);
+// Example: parse token from URL after redirect
+const params = new URLSearchParams(window.location.search);
+const token = params.get("token");
+
+if (token) {
+  // Save JWT to localStorage
+  localStorage.setItem("jwtToken", token);
+
+  // Optionally, decode token to get user info
+  const payload = JSON.parse(atob(token.split('.')[1]));
+  console.log("Logged in user:", payload.email, payload.role);
+}
 
   const handleLogout = () => {
     logout();

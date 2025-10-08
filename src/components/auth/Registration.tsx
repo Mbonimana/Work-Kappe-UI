@@ -88,9 +88,12 @@ const Registration = () => {
         >
           Register
         </button>
+
       </div>
     </form>
+    
   </div>
+ 
 </div>
 
         </>

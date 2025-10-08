@@ -27,7 +27,7 @@ const OrderCards: React.FC = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/orders/getallorders", {
+        const res = await fetch("https://kappebackend.onrender.com/api/orders/getallorders", {
           headers: { Authorization: `Bearer ${token}` },
         });
 

@@ -6,9 +6,9 @@ const Layout=() => {
 
     return (
         <>
-            <NavContainer/>
+            <NavContainer/> 
             <main className="">
-<Outlet/>
+             <Outlet />
             </main>
             
             
