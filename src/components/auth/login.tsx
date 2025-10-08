@@ -102,7 +102,7 @@ const Login = () => {
         <h2 className="text-black  items-center justify-center">OR</h2>
     <button
   type="button"
-  onClick={() => window.location.href = "http://localhost:5000/api/auth/google"}
+  onClick={() => window.location.href = "https://kappebackend.onrender.com/api/auth/google"}
   className="mt-2 flex items-center justify-center gap-3 h-[2.5rem] w-full rounded-md border border-gray-300 bg-white text-black text-sm font-medium shadow-sm transition duration-200 hover:bg-gray-100 hover:shadow-md"
 >
   {/* Multicolor Google Icon */}
